@@ -1,6 +1,5 @@
 package com.cryptovision.backend.entity;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
