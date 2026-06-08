@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 
+@Entity
 @Table(name = "portfolios",
         uniqueConstraints = @UniqueConstraint(columnNames = {"usuario_id", "cripto_id"}))
 public class Portfolio {

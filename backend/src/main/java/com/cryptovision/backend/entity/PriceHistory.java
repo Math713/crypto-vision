@@ -20,7 +20,7 @@ public class PriceHistory {
 
     @ManyToOne(fetch = FetchType.LAZY) // just to make it explicit
     @JoinColumn(name = "cripto_id", nullable = false)
-    private Cryptocurrency cripto;
+    private Cryptocurrency cryptocurrency;
 
     @Column(name = "preco", nullable = false)
     private BigDecimal price;
