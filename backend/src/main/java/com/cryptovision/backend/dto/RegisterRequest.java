@@ -1,8 +1,10 @@
 package com.cryptovision.backend.dto;
 
+import com.cryptovision.backend.enums.ProfileType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Schema(description = "Dados necessários para cadastrar um usuário")
@@ -19,5 +21,9 @@ public record RegisterRequest(
         @Schema(description = "Senha do usuário", example = "senha123")
         @NotBlank(message = "senha é obrigatória")
         @Size(min = 8, message = "senha tem que ter no mínimo 8 caracteres")
-        String password
+        String password,
+
+        @Schema(description = "Perfil do usuário", example = "INICIANTE")
+        @NotNull(message = "perfil é obrigatório")
+        ProfileType profileType
 ) {}
