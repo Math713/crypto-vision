@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter @Setter
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 
 @Entity
 @Table(name = "autenticacao")

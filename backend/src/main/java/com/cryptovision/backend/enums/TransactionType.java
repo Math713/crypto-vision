@@ -1,7 +1,8 @@
 package com.cryptovision.backend.enums;
 
 public enum TransactionType {
-    INICIANTE,
-    EXPERIENTE,
-    CORPORATIVO
+    COMPRA,
+    VENDA,
+    DEPOSITO,
+    SAQUE
 }

@@ -16,7 +16,7 @@ public record RegisterRequest(
         @Email(message = "email com formato inválido")
         String email,
 
-        @Schema(description = "Senha do usuaário", example = "senha123")
+        @Schema(description = "Senha do usuário", example = "senha123")
         @NotBlank(message = "senha é obrigatória")
         @Size(min = 8, message = "senha tem que ter no mínimo 8 caracteres")
         String password

@@ -13,7 +13,7 @@ import java.util.List;
 
 @Getter @Setter
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 
 @Entity
 @Table(name = "usuarios")
