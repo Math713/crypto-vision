@@ -17,6 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -53,6 +54,7 @@ public class AuthService {
         return new AuthResponse(accessToken, refreshToken);
     }
 
+    @Transactional
     public AuthResponse login(LoginRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.email(), request.password())
@@ -73,6 +75,7 @@ public class AuthService {
         return new AuthResponse(accessToken, refreshToken);
     }
 
+    @Transactional
     public AuthResponse refresh(RefreshRequest request) {
         Authentication auth = authenticationRepository.findByRefreshToken(request.refreshToken())
                 .orElseThrow(InvalidTokenException::new);
@@ -87,6 +90,7 @@ public class AuthService {
         return new AuthResponse(accessToken, request.refreshToken());
     }
 
+    @Transactional
     public void logout(User user) {
         Authentication auth = authenticationRepository.findByUser(user)
                 .orElseThrow(() -> new UserNotFoundException(user.getEmail()));

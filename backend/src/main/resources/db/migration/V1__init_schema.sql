@@ -12,9 +12,9 @@ DROP TYPE IF EXISTS transacao_tipo;
 DROP TYPE IF EXISTS role_tipo;
 
 -- ENUMs
-CREATE TYPE perfil_tipo AS ENUM ('iniciante', 'experiente', 'corporativo');
-CREATE TYPE transacao_tipo AS ENUM ('compra', 'venda', 'deposito', 'saque');
-CREATE TYPE role_tipo AS ENUM ('usuario', 'gestor', 'administrador');
+CREATE TYPE perfil_tipo AS ENUM ('INICIANTE', 'EXPERIENTE', 'CORPORATIVO');
+CREATE TYPE transacao_tipo AS ENUM ('COMPRA', 'VENDA', 'DEPOSITO', 'SAQUE');
+CREATE TYPE role_tipo AS ENUM ('USUARIO', 'GESTOR', 'ADMINISTRADOR');
 
 -- USUARIOS
 CREATE TABLE usuarios(
