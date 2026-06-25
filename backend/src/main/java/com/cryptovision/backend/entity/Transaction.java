@@ -22,7 +22,7 @@ public class Transaction {
     @JoinColumn(name = "usuario_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // just to make it explicit
     @JoinColumn(name = "cripto_id", nullable = false)
     private Cryptocurrency cryptocurrency;
 

@@ -19,7 +19,7 @@ public class Portfolio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // just to make it explicit
     @JoinColumn(name = "usuario_id", nullable = false)
     private User user;
 
