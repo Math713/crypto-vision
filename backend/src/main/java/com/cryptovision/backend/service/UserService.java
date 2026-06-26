@@ -5,6 +5,7 @@ import com.cryptovision.backend.dto.UpdateUserRequest;
 import com.cryptovision.backend.dto.UserResponseDTO;
 import com.cryptovision.backend.entity.User;
 import com.cryptovision.backend.exception.InvalidPasswordException;
+import com.cryptovision.backend.exception.UserNotFoundException;
 import com.cryptovision.backend.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,15 +20,17 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public UserResponseDTO getMe(User user) {
-        return toDTO(user);
+        return toDto(user);
     }
 
     @Transactional
     public UserResponseDTO updateMe(User user, UpdateUserRequest request) {
-        user.setName(request.name());
-        user.setProfileType(request.profileType());
-        userRepository.save(user);
-        return toDTO(user);
+        userRepository.updateUser(user.getId(), request.name(), request.profileType().name());
+
+        User updated = userRepository.findById(user.getId())
+                .orElseThrow(() -> new UserNotFoundException(user.getEmail()));
+
+        return toDto(updated);
     }
 
     @Transactional
@@ -35,11 +38,12 @@ public class UserService {
         if (!passwordEncoder.matches(request.currentPassword(), user.getPasswordHash())) {
             throw new InvalidPasswordException("Senha atual incorreta");
         }
-        user.setPasswordHash(passwordEncoder.encode(request.newPassword()));
-        userRepository.save(user);
+
+        String newHash = passwordEncoder.encode(request.newPassword());
+        userRepository.updatePassword(user.getId(), newHash);
     }
 
-    private UserResponseDTO toDTO(User user) {
+    private UserResponseDTO toDto(User user) {
         return new UserResponseDTO(
                 user.getId(),
                 user.getName(),
