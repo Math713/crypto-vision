@@ -1,6 +1,9 @@
 package com.cryptovision.backend.config;
 
+import com.cryptovision.backend.exception.ApiError;
 import com.cryptovision.backend.security.JwtFilter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +26,7 @@ public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
     private final UserDetailsService userDetailsService;
+    private final ObjectMapper objectMapper;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -39,6 +43,23 @@ public class SecurityConfig {
                         // .requestMatchers("/alerts/**").hasAnyRole("INICIANTE", "EXPERIENTE", "CORPORATIVO")
                         // .requestMatchers("/cryptos/**").authenticated()
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, authException) -> {
+
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.setContentType("application/json");
+                            response.setCharacterEncoding("UTF-8");
+
+                            ApiError error = new ApiError(
+                                    401,
+                                    "Não autorizado",
+                                    "Autenticação necessária para acessar este recurso",
+                                    request.getRequestURI()
+                            );
+
+                            objectMapper.writeValue(response.getWriter(), error);
+                        })
                 )
                 .userDetailsService(userDetailsService)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
